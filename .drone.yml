@@ -3,9 +3,10 @@ name: default
 
 steps:
 - name: build
-  image: docker
+  image: ubuntu
   commands:
   - apt-get update -qq
+  - apt-get install docker-ce
   - docker run -d --net=host --pid=host --cap-add=NET_ADMIN --cap-add=SYS_BOOT --cap-add=SYS_TIME --cap-add=KILL -e GREMLIN_TEAM_ID="${GREMLIN_TEAM_ID}" -e GREMLIN_TEAM_SECRET="${GREMLIN_TEAM_SECRET}" -v /var/run/docker.sock:/var/run/docker.sock -v /var/log/gremlin:/var/log/gremlin -v /var/lib/gremlin:/var/lib/gremlin gremlin/gremlin attack cpu
   - apt-get install -y -qq telnet > /dev/null
   - (sleep 1; echo "stats"; sleep 300; echo "quitting";) | telnet cache 11211 || true
