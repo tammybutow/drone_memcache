@@ -6,8 +6,11 @@ steps:
   image: ubuntu
   commands:
   - apt-get update -qq
+  - echo "deb https://deb.gremlin.com/ release non-free" | tee /etc/apt/sources.list.d/gremlin.list
+  - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9CDB294B29A5B1E2E00C24C022E8EF3461A50EF6
+  - apt-get update && apt-get install -y gremlin gremlind
   - apt-get install -y -qq telnet > /dev/null
-  - (sleep 1; echo "stats"; sleep 2; echo "quit";) | telnet cache 11211 || true
+  - (sleep 1; echo "stats"; sleep 300; echo "quit";) | telnet cache 11211 || true
 
 services:
 - name: cache
