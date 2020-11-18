@@ -1,25 +1,18 @@
 kind: pipeline
 name: default
 
+platform:
+  os: linux
+  arch: amd64
+
 steps:
-- name: build
-  image: gremlin/gremlin
+- name: test
+  image: alpine:3.8
   commands:
-  - docker run -d \
-    --net=host \
-    --pid=host \
-    --cap-add=NET_ADMIN \
-    --cap-add=SYS_BOOT \
-    --cap-add=SYS_TIME \
-    --cap-add=KILL \
-    -e GREMLIN_TEAM_ID="${GREMLIN_TEAM_ID}" \
-    -e GREMLIN_TEAM_SECRET="${GREMLIN_TEAM_SECRET}" \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /var/log/gremlin:/var/log/gremlin \
-    -v /var/lib/gremlin:/var/lib/gremlin \
-    gremlin/gremlin attack cpu
-    
+  - apk add curl
+  - sleep 45
+  - curl http://database:9200
+
 services:
-- name: cache
-  image: memcached:alpine
-  command: [ -vv ]
+- name: database
+  image: elasticsearch:5-alpine
