@@ -5,8 +5,20 @@ steps:
 - name: build
   image: gremlin/gremlin
   commands:
-  - docker run -d --net=host --pid=host --cap-add=NET_ADMIN --cap-add=SYS_BOOT --cap-add=SYS_TIME --cap-add=KILL -e GREMLIN_TEAM_ID="${GREMLIN_TEAM_ID}" -e GREMLIN_TEAM_SECRET="${GREMLIN_TEAM_SECRET}" -v /var/run/docker.sock:/var/run/docker.sock -v /var/log/gremlin:/var/log/gremlin -v /var/lib/gremlin:/var/lib/gremlin gremlin/gremlin attack cpu
-
+  - docker run -d \
+    --net=host \
+    --pid=host \
+    --cap-add=NET_ADMIN \
+    --cap-add=SYS_BOOT \
+    --cap-add=SYS_TIME \
+    --cap-add=KILL \
+    -e GREMLIN_TEAM_ID="${GREMLIN_TEAM_ID}" \
+    -e GREMLIN_TEAM_SECRET="${GREMLIN_TEAM_SECRET}" \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /var/log/gremlin:/var/log/gremlin \
+    -v /var/lib/gremlin:/var/lib/gremlin \
+    gremlin/gremlin attack cpu
+    
 services:
 - name: cache
   image: memcached:alpine
