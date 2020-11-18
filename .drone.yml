@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: build
-  image: ubuntu
+  image: gremlin/gremlin
   commands:
   - apt-get update -qq
   - apt-get install docker -y
